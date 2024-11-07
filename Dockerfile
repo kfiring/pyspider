@@ -96,7 +96,7 @@ RUN pip install -e .[all]
 # Create a symbolic link to node_modules
 RUN ln -s /opt/node/node_modules ./node_modules
 
-RUN pip install oss2 celery
+RUN pip install oss2 celery 
 
 #VOLUME ["/opt/pyspider"]
 ENTRYPOINT ["pyspider"]
