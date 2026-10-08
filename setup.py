@@ -36,7 +36,7 @@ install_requires = [
 ]
 
 extras_require_all = [
-    'mysql-connector-python==8.0.16',
+    'mysql-connector-python==8.0.21',
     'pymongo==3.9.0',
     'redis==3.5.3',
     'redis-py-cluster==2.1.3',

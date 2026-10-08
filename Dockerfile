@@ -63,12 +63,11 @@ RUN cd /tmp && wget https://www.python.org/ftp/python/${PY_VER}/Python-${PY_VER}
     && ln -s ${PY_INSTALL_PREFIX}/bin/pip3 ${PY_INSTALL_PREFIX}/bin/pip \
     && ln -s ${PY_INSTALL_PREFIX}/bin/python3 ${PY_INSTALL_PREFIX}/bin/python \
     && rm -rf /tmp/Python-*
-COPY pip.conf /root/.pip/pip.conf
 
 # install phantomjs
 RUN mkdir -p /opt/phantomjs \
     && cd /opt/phantomjs \
-    && wget -O phantomjs.tar.bz2 https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 \
+    && curl -L -o phantomjs.tar.bz2 https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 \
     && tar xavf phantomjs.tar.bz2 --strip-components 1 \
     && ln -s /opt/phantomjs/bin/phantomjs /usr/local/bin/phantomjs \
     && rm phantomjs.tar.bz2
@@ -83,6 +82,7 @@ RUN curl -sL https://nodejs.org/dist/v${NODEJS_VERSION}/node-v${NODEJS_VERSION}-
     && npm install puppeteer express
 
 # install requirements
+COPY pip.conf /root/.pip/pip.conf
 COPY requirements.txt /opt/pyspider/requirements.txt
 RUN pip install -r /opt/pyspider/requirements.txt
 
@@ -96,7 +96,7 @@ RUN pip install -e .[all]
 # Create a symbolic link to node_modules
 RUN ln -s /opt/node/node_modules ./node_modules
 
-RUN pip install oss2 celery 
+RUN pip install oss2==2.19.1 celery==5.5.0
 
 #VOLUME ["/opt/pyspider"]
 ENTRYPOINT ["pyspider"]
